@@ -18,5 +18,8 @@ public class Main {
         Solutions.nextPermutation(numbers);
         System.out.println(Arrays.toString(numbers));
 
+        System.out.println(Solutions.permute(new int[] {1, 2, 3}));
+        System.out.println(Solutions.subsets(new int[] {1, 2, 3}));
+
     }
 }

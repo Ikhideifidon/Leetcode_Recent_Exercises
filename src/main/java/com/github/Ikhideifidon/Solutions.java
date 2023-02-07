@@ -1,8 +1,6 @@
 package com.github.Ikhideifidon;
 
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Solutions {
     public static int largestRectangleArea(int[] heights) {
@@ -184,5 +182,57 @@ public class Solutions {
     private static void reverse(int[] nums, int left, int right) {
         while(right > left)
             swap(nums, left++, right--);
+    }
+
+    public static List<List<Integer>> permute(int[] nums) {
+        if (nums ==  null) return null;
+        int n = nums.length;
+        if (n <= 1)
+            return new ArrayList<>(nums[0]);
+        List<List<Integer>> result = new ArrayList<>();
+        backtrackPermute(nums, new ArrayList<>(), new HashSet<>(), result);
+        return result;
+    }
+
+    private static void backtrackPermute(int[] nums, List<Integer> sublist, Set<Integer> tempSet, List<List<Integer>> result) {
+        if (sublist.size() == nums.length) {
+            result.add(new ArrayList<>(sublist));
+        } else {
+            for (int num : nums) {
+                if (tempSet.contains(num))
+                    continue;
+                tempSet.add(num);
+                sublist.add(num);
+
+                backtrackPermute(nums, sublist, tempSet, result);
+
+                // Remove the just added element from the set
+                tempSet.remove(sublist.get(sublist.size() - 1));
+                // Remove the last element just added to the sublist.
+                sublist.remove(sublist.size() - 1);
+            }
+        }
+    }
+
+    public static List<List<Integer>> subsets(int[] nums) {
+        if (nums == null) return null;
+        List<List<Integer>> result = new LinkedList<>();
+        backtrackSubsets(nums, new ArrayList<>(), result, 0);
+        return result;    
+    }
+
+    private static void backtrackSubsets(int[] nums, List<Integer> sublist, List<List<Integer>> result, int start) {
+        if (start == nums.length) {
+            result.add(new ArrayList<>(sublist));
+            return;
+        }
+
+        // Decision to add nums[start]
+        sublist.add(nums[start]);
+        backtrackSubsets(nums, sublist, result, start + 1);
+        // Decision to not add nums[start]
+        // Remove the just added element from the sublist.
+        sublist.remove(sublist.size() - 1);
+        backtrackSubsets(nums, sublist, result, start + 1);
     }
 }
