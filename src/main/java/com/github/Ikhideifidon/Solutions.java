@@ -199,8 +199,8 @@ public class Solutions {
             result.add(new ArrayList<>(sublist));
         } else {
             for (int num : nums) {
-                if (tempSet.contains(num))
-                    continue;
+                // if (tempSet.contains(num))
+                //     continue;
                 tempSet.add(num);
                 sublist.add(num);
 
@@ -235,4 +235,90 @@ public class Solutions {
         sublist.remove(sublist.size() - 1);
         backtrackSubsets(nums, sublist, result, start + 1);
     }
+
+    public static List<List<Integer>> subsetsWithDup(int[] nums) {
+        if (nums == null) return null;
+        List<List<Integer>> result = new LinkedList<>();
+        int n = nums.length;
+        if (n == 0) 
+            return result;
+
+        // Sort the given array in order to align duplicates (if any).
+        Arrays.sort(nums);
+        backtrackSubsetsWithDup(nums, new ArrayList<>(), result, 0);
+        return result; 
+    }
+
+    private static void backtrackSubsetsWithDup(int[] nums, List<Integer> sublist, List<List<Integer>> result, int start) {
+        if (start == nums.length) {
+            result.add(new ArrayList<>(sublist));
+            return;
+        }
+        // Decision to include nums[start]
+        sublist.add(nums[start]);
+        backtrackSubsetsWithDup(nums, sublist, result, start + 1);
+        // Decision to exclude nums[start]
+        sublist.remove(sublist.size() - 1);                                 // Remove the last element just added to sublist
+        // Account for duplicates. Example: [1, 2, 2, 3]
+        // This action will only take place during backtracking.
+        while (start + 1 < nums.length && nums[start] == nums[start + 1])
+            start++;
+        backtrackSubsetsWithDup(nums, sublist, result, start + 1);          // Backtrack
+    }
+
+    // The slight difference between these two algorithms is that "i" (in method2) and "start" both increase to the same value during the DFS.
+    // During backtracking, however, the "start" value begins to decrease as the recursion unwinds (backtracking).
+    // Therefore, we are certain that the point of differentiation of the "i" and the "start" values is the beginning of backtracking.
+    @SuppressWarnings("unused")
+    public List<List<Integer>> subsetsWithDupMethod2(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        Arrays.sort(nums);
+        helper(list, new ArrayList<>(), nums, 0);
+        return list;
+    }
+
+    private void helper(List<List<Integer>> list, List<Integer> tempList, int [] nums, int start){
+        list.add(new ArrayList<>(tempList));
+        for(int i = start; i < nums.length; i++){
+            if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates during backtracking.
+            tempList.add(nums[i]);
+            helper(list, tempList, nums, i + 1);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+
+    public static List<List<Integer>> permuteUnique(int[] nums) {
+        if (nums == null) return null;
+        List<List<Integer>> result = new LinkedList<>();
+        int n = nums.length;
+        if (n == 1) return result;
+
+        Arrays.sort(nums);
+        backtrackPermuteUnique(nums, new LinkedList<>(), new boolean[nums.length], result, 0);
+        return result;
+    }
+
+    private static void backtrackPermuteUnique(int[] nums, List<Integer> sublist, boolean[] used, List<List<Integer>> result, int start) {
+        if (sublist.size() == nums.length) {           
+            result.add(new LinkedList<>(sublist));
+            return;
+        }
+
+        for (int i = start; i < nums.length; i++) {
+            // Check for duplicates during backtracking.
+            // Backtracking occurs when !used[i - 1])
+            if (used[i] || i > start && nums[i] == nums[i - 1] && !used[start])
+                continue;
+
+            // Decision to include nums[i]
+            used[i] = true;
+            sublist.add(nums[i]);
+            backtrackPermuteUnique(nums, sublist, used, result, i + 1);
+
+            // Decision to exclude nums[i]
+            used[i] = false;
+            sublist.remove(sublist.size() - 1);
+        }
+    }
+
 }
