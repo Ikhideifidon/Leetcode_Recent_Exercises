@@ -21,7 +21,9 @@ public class Main {
         System.out.println(Solutions.permute(new int[] {1, 2, 3}));
         System.out.println(Solutions.subsets(new int[] {1, 2, 3}));
         System.out.println(Solutions.subsetsWithDup(new int[] {1, 2, 2}));
-        System.out.println(Solutions.permuteUnique(new int[] {1, 1, 1, 1, 2, 1, 5}));
+        System.out.println(Solutions.permuteUnique(new int[] {1, 1, 2}));
+        System.out.println(Solutions.combinationSum2(new int[] {2, 3, 6, 7}, 7));
+        System.out.println(Solutions.combinationSum(new int[] {2, 3, 6, 7}, 7));
 
     }
 }

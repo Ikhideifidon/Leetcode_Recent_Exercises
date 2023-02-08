@@ -325,4 +325,60 @@ public class Solutions {
         }
     }
 
+    public static List<List<Integer>> combinationSum(int[] candidates, int target) {
+        if (candidates == null) return null;
+        List<List<Integer>> result = new LinkedList<>();
+        int n = candidates.length;
+        if (n == 0) return result;
+        Arrays.sort(candidates);
+        backtrackCombinationSum(candidates, target, new LinkedList<>(), result, 0);
+        return result;
+    }
+
+    private static void backtrackCombinationSum(int[] candidates, int target, List<Integer> sublist, List<List<Integer>> result, int start) {
+        if (target < 0)
+            return;
+
+        else if (target == 0) {
+            result.add(new LinkedList<>(sublist));
+            return;
+        }
+        
+        for (int i = start; i < candidates.length; i++) {
+            // Add candidate to the sublist
+            sublist.add(candidates[i]);
+            backtrackCombinationSum(candidates, target - candidates[i], sublist, result, i);
+            // Remove candidate from sublist
+            sublist.remove(sublist.size() - 1);
+        }
+    }
+
+    public static List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        if (candidates == null) return null;
+        List<List<Integer>> result = new LinkedList<>();
+        int n = candidates.length;
+        if (n == 0) return result;
+        Arrays.sort(candidates);
+        backtrackCombinationSum2(candidates, target, new LinkedList<>(), result, 0);
+        return result;
+    }
+
+    private static void backtrackCombinationSum2(int[] candidates, int target, List<Integer> sublist, List<List<Integer>> result, int start) {
+        if (start >= candidates.length)
+            return;
+
+        if (target < 0)
+            return;
+
+        else if (target == 0) {
+            result.add(new LinkedList<>(sublist));
+            return;
+        }
+
+        sublist.add(candidates[start]);
+        backtrackCombinationSum2(candidates, target - candidates[start], sublist, result, start);
+        sublist.remove(sublist.size() - 1); 
+        backtrackCombinationSum2(candidates, target, sublist, result, start + 1);
+    }
+
 }
