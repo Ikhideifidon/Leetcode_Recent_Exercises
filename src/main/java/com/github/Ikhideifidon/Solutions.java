@@ -1,6 +1,7 @@
 package com.github.Ikhideifidon;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class Solutions {
     public static int largestRectangleArea(int[] heights) {
@@ -199,8 +200,8 @@ public class Solutions {
             result.add(new ArrayList<>(sublist));
         } else {
             for (int num : nums) {
-                // if (tempSet.contains(num))
-                //     continue;
+                if (tempSet.contains(num))
+                    continue;
                 tempSet.add(num);
                 sublist.add(num);
 
@@ -291,33 +292,36 @@ public class Solutions {
         if (nums == null) return null;
         List<List<Integer>> result = new LinkedList<>();
         int n = nums.length;
-        if (n == 1) return result;
+        if (n == 0) return result;
 
-        Arrays.sort(nums);
-        backtrackPermuteUnique(nums, new LinkedList<>(), new boolean[nums.length], result, 0);
+        Map<Integer, Integer> frequency = new HashMap<>();
+        for (int num : nums) 
+            frequency.put(num, (frequency.getOrDefault(num, 0) + 1));
+    
+        backtrackPermuteUnique(nums, frequency, new LinkedList<>(), result);
         return result;
     }
 
-    private static void backtrackPermuteUnique(int[] nums, List<Integer> sublist, boolean[] used, List<List<Integer>> result, int start) {
+    private static void backtrackPermuteUnique(int[] nums, Map<Integer, Integer> frequency, List<Integer> sublist, List<List<Integer>> result) {
         if (sublist.size() == nums.length) {           
             result.add(new LinkedList<>(sublist));
             return;
         }
 
-        for (int i = start; i < nums.length; i++) {
-            // Check for duplicates during backtracking.
-            // Backtracking occurs when !used[i - 1])
-            if (used[i] || i > start && nums[i] == nums[i - 1] && !used[start])
-                continue;
+        for (Entry<Integer, Integer> pair : frequency.entrySet()) {
+            if (pair.getValue() > 0) {
+                int num = pair.getKey();
+                // Add num to the sublist
+                sublist.add(num);
+                // Decrease frequency count of num added to the sublist
+                frequency.put(num, frequency.get(num) - 1);
+                backtrackPermuteUnique(nums, frequency, sublist, result);
 
-            // Decision to include nums[i]
-            used[i] = true;
-            sublist.add(nums[i]);
-            backtrackPermuteUnique(nums, sublist, used, result, i + 1);
-
-            // Decision to exclude nums[i]
-            used[i] = false;
-            sublist.remove(sublist.size() - 1);
+                // Remove num from the sublist
+                sublist.remove(sublist.size() - 1);
+                // Increase the frequency count of num
+                frequency.put(num, frequency.get(num) + 1);
+            }
         }
     }
 

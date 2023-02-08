@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77202c76-95e9-4aea-a30d-19e52c7e7c49" name="Changes" comment="">
+    <list default="true" id="77202c76-95e9-4aea-a30d-19e52c7e7c49" name="Changes" comment="Leetcode Recent Exercises">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/Ikhideifidon/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/Ikhideifidon/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/Ikhideifidon/Solutions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/Ikhideifidon/Solutions.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,6 +102,18 @@
       <option name="presentableId" value="Default" />
       <updated>1675437736648</updated>
     </task>
+    <task id="LOCAL-00001" summary="Leetcode Recent Exercises">
+      <created>1675792834058</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1675792834058</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Leetcode Recent Exercises" />
+    <option name="LAST_COMMIT_MESSAGE" value="Leetcode Recent Exercises" />
   </component>
 </project>
